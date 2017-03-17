@@ -12,6 +12,7 @@ $parameters = $selectObj->selectParameters($_GET['analysis_id']);
 if (isset($_POST['send'])){
 
     $insertObj = new Insert();
+    $newPatientId = 0;
         $newPatientId = $insertObj->insertPatient(
             $_POST['name'],
             $_POST['age'],
@@ -20,6 +21,8 @@ if (isset($_POST['send'])){
         );
 
     //перевірка чи є ід
+    $newOrderId = 0;
+    if($newPatientId){
         $newOrderId = $insertObj->insertOrder(
             $newPatientId,
             $_POST['diagnosis'],
@@ -29,7 +32,12 @@ if (isset($_POST['send'])){
             $_POST['completion_date'],
             $_POST['place']
         );
+    }
+    else{
+        echo "Patient was not added";
+    }
 
+    if($newOrderId){
         foreach ($parameters as $parameter){
             if(isset($_POST[$parameter['parameter_id']])){
                 $result = $_POST[$parameter['parameter_id']];
@@ -40,6 +48,11 @@ if (isset($_POST['send'])){
                 );
             }
         }
+    }
+    else{
+        echo "Order was not added";
+    }
+
 
 }
 ?>

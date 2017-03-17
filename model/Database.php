@@ -59,10 +59,7 @@ class Database
         }
     }
 
-    function getLastIndexInTable($tableName){
-        $statement = $this->connection->prepare('SHOW TABLE STATUS LIKE \'?\'');
-        $statement->execute([$tableName]);
-        $row = $statement->fetch(PDO::FETCH_ASSOC);
-        return intval($row['Auto_increment']);
+    function getLastInsertId(){
+        return $this->connection->lastInsertId();
     }
 }

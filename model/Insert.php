@@ -16,18 +16,14 @@ class Insert
     }
 
     public function insertAnalysis($name){
-        $newAnalysisId = $this->database->getLastIndexInTable("Analyzes");
-        $this->database->insertRow("INSERT INTO Analyzes VALUES (?,?)",[
-            $newAnalysisId,
+        $this->database->insertRow("INSERT INTO Analyzes(analysis_name) VALUES (?)",[
             $name
         ]);
     }
 
 
     public function insertParameter($name, $unit, $normMin, $normMax, $analysisId){
-        $newParameterId = $this->database->getLastIndexInTable("Parameter");
-        $this->database->insertRow("INSERT INTO Parameters VALUES (?,?,?,?,?,?)",[
-            $newParameterId,
+        $this->database->insertRow("INSERT INTO Parameters(parameter_name, unit, norm_min, norm_max, analysis_id) VALUES (?,?,?,?,?)",[
             $name,
             $unit,
             $normMin,
@@ -37,24 +33,21 @@ class Insert
     }
 
     public function insertPatient($name, $age, $sex, $address){
-        $newPatientId = $this->database->getLastIndexInTable("Patient");
-        //LastInsertedId
         //1 пара у 31 ауд Понеділок
-        $this->database->insertRow("INSERT INTO Patients VALUES (?, ?, ?, ?, ?)", [
-                $newPatientId,
+        $this->database->insertRow("INSERT INTO Patients(patient_name, birthdate, sex, address_id) VALUES (?, ?, ?, ?)", [
                 $name,
                 $age,
                 $sex,
                 $address
             ]);
+        $newPatientId = $this->database->getLastInsertId();
+
         return $newPatientId;
     }
 
     public  function insertOrder($patientId, $diagnosis, $analysis, $coverDiagnosis, $receivingDate, $completionDate, $laboratory){
-        $newOrderId = $this->database->getLastIndexInTable("Orders");
         //echo $orderId;
-        $this->database->insertRow("INSERT INTO Orders VALUES (?, ?, ?, ?, ?, ?, ?, ?)",[
-            $newOrderId,
+        $this->database->insertRow("INSERT INTO Orders(patient_id, diagnosis_id, analysis_id, cover_diagnosis, receiving_date, completion_date, laboratory) VALUES (?, ?, ?, ?, ?, ?, ?)",[
             $patientId,
             $diagnosis,
             $analysis,
@@ -63,14 +56,14 @@ class Insert
             $completionDate,
             $laboratory
         ]);
+        $newOrderId = $this->database->getLastInsertId();
+
         return $newOrderId;
     }
 
 
     public function insertResult($parameterId, $orderId, $result){
-        $newResultId = $this->database->getLastIndexInTable("Results");
-        $this->database->insertRow("INSERT INTO Results VALUES (?, ?, ?, ?)",[
-            $newResultId,
+        $this->database->insertRow("INSERT INTO Results(parameter_id, order_id, result) VALUES (?, ?, ?)",[
             $parameterId,
             $orderId,
             $result
