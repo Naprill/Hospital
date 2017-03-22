@@ -58,6 +58,8 @@ WHERE
 
 <?php include "header.php"; ?>
 
+<h2>Перегляд аналізу</h2>
+
     <div class="info">
         <label>Пацієнт: <?php echo $patientData['patient_name'] ?> </label>
     </div>
@@ -109,7 +111,7 @@ WHERE
                         echo " < ".$parameter['norm_max'];
                         if($parameter['result'] >= $parameter['norm_max'])$norm_hit = false;
                     }
-                    else if($parameter['norm_max']==0){
+                    else if($parameter['norm_max']==1000){
                         echo " > ".$parameter['norm_min'];
                         if($parameter['result'] <= $parameter['norm_min'])$norm_hit = false;
                     }

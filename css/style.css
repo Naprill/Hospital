@@ -20,6 +20,12 @@ h1 a:visited{
     text-decoration: none;
 }
 
+h2{
+    color: #4185f3;
+    font-style: italic;
+    margin-left: 40%;
+}
+
 ul {
     list-style-type: none;
     margin: 50px 0;
@@ -121,6 +127,12 @@ th, td {
     background-color: inherit;
     width: 70%;
     height: 20px;
+}
+
+.near{
+    position: relative;
+    margin-right: 400px;
+    float: right;
 }
 
 .input20 {

@@ -19,6 +19,8 @@ class Insert
         $this->database->insertRow("INSERT INTO Analyzes(analysis_name) VALUES (?)",[
             $name
         ]);
+        $newAnalysisId = $this->database->getLastInsertId();
+        return $newAnalysisId;
     }
 
 
@@ -33,7 +35,6 @@ class Insert
     }
 
     public function insertPatient($name, $age, $sex, $address){
-        //1 пара у 31 ауд Понеділок
         $this->database->insertRow("INSERT INTO Patients(patient_name, birthdate, sex, address_id) VALUES (?, ?, ?, ?)", [
                 $name,
                 $age,
@@ -41,7 +42,6 @@ class Insert
                 $address
             ]);
         $newPatientId = $this->database->getLastInsertId();
-
         return $newPatientId;
     }
 
@@ -57,7 +57,6 @@ class Insert
             $laboratory
         ]);
         $newOrderId = $this->database->getLastInsertId();
-
         return $newOrderId;
     }
 

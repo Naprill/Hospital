@@ -49,6 +49,8 @@ if (isset($_POST['send'])) {
     <?php include "header.php"; ?>
 </header>
 
+<h2>Знайти пацієнта</h2>
+
 <form action="searchPatient.php" method="post">
     <div class="info">
         <label>Пацієнт:

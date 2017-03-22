@@ -5,6 +5,7 @@ spl_autoload_register(function ($class_name) {
 });
 $database = new Database();
 $addresses = $database->getRows("SELECT * FROM Address");
+$parameters = $database->getRows("SELECT * FROM Parameters");
 $query = "SELECT DISTINCT
                 Patients.patient_name,
                 Orders.completion_date, 
@@ -24,7 +25,13 @@ if (isset($_POST['send'])) {
 
     if (isset($_POST['address'])){
         $query = $query." WHERE 
-                Address.address_id = ?; ";
+                Address.address_id = ? ";
+        $searchResult = $database->getRows($query,[$_POST['address']]);
+    }
+
+    if (isset($_POST['parameter'])){
+        $query = $query." WHERE 
+                .address_id = ?; ";
         $searchResult = $database->getRows($query,[$_POST['address']]);
     }
 
@@ -49,6 +56,8 @@ if (isset($_POST['send'])) {
     <?php include "header.php"; ?>
 </header>
 
+<h2>Знайти аналіз</h2>
+
 <form action="searchAnalysis.php" method="post">
     <div class="info">
         <label>Адреса:
@@ -58,7 +67,17 @@ if (isset($_POST['send'])) {
                 <?php endforeach; ?>
             </select>
         </label>
-    </div><input type="submit" name="send" value="Знайти" required/>
+    </div>
+    <div class="info">
+        <label>Параметр не в нормі:
+            <select name="parameter">
+                <?php foreach ($parameters as $parameter) : ?>
+                    <option value='<?php echo $parameter['']; ?>'><?php echo $address['']; ?></option>;
+                <?php endforeach; ?>
+            </select>
+        </label>
+    </div>
+    <input type="submit" name="send" value="Знайти" required/>
 </form>
 
 
@@ -79,7 +98,7 @@ if (isset($_POST['send'])) {
 
     <?php foreach ($searchResult as $result) : ?>
         <tr>
-            <td><a class="button_view" href="viewAnalysis.php?order_id=<?php echo $result['order_id']; ?>"> </a></td>
+            <td><a class="button_view" target="_blank" href="viewAnalysis.php?order_id=<?php echo $result['order_id']; ?>"> </a></td>
             <td> <?php echo $result['order_id']?> </td>
             <td scope="row"> <?php echo $result['patient_name'] ?> </td>
             <td>  <?php echo $result['completion_date'] ?> </td>

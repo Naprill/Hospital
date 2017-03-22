@@ -46,16 +46,15 @@
     <h1>Чернівецька обласна лікарня</h1>
     <ul>
         <p>Змінити шаблони</p>
-        <li><a href="view/addAnalysis.php">Створити новий аналіз</a></li>
-        <li><a href="view/addParameter.php">Додати новий параметр</a></li>
+        <li><a href="view/addAnalysis.php">Створити новий шаблон додавання аналізу</a></li>
+        <li><a href="#">Редагувати шаблон додавання аналізу</a></li>
         <p>Зберегти результати</p>
         <!--TODO тут буде цикл php, який створить список всіх аналізів-->
         <li><a href="view/addAnalysisResult.php?analysis_id=1">Додати аналіз мікрофлори</a></li>
         <li><a href="view/addAnalysisResult.php?analysis_id=2">Додати аналіз пробний</a></li>
         <p>Пошук</p>
-        <li><a href="view/viewAnalysis.php">Знайти аналіз мікрофлори</a></li>
-        <li><a href="view/searchAnalysis.php">Знайти...</a></li>
-        <li><a href="">Знайти аналіз крові</a></li>
+        <li><a href="view/searchAnalysis.php">Знайти аналіз</a></li>
+        <li><a href="view/searchPatient.php">Знайти пацієнта</a></li>
 
     </ul>
 </div>
