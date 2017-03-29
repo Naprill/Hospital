@@ -9,15 +9,8 @@ body {
     font-family: 'Nunito', sans-serif;
     color: #384047;
 }
-
-h1 a{
-    color: #020204;
-    text-decoration: none;
-}
-
-h1 a:visited{
-    color: #020204;
-    text-decoration: none;
+a img{
+    width: 1335px;
 }
 
 h2{
@@ -28,7 +21,7 @@ h2{
 
 ul {
     list-style-type: none;
-    margin: 50px 0;
+    margin: 0 0 50px 0;
     padding: 0;
     overflow: hidden;
     background-color: #16446e;
@@ -58,7 +51,7 @@ li.dropdown{
     position: absolute;
     background-color: #f9f9f9;
     min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     z-index: 1;
 }
 
@@ -129,7 +122,7 @@ th, td {
     height: 20px;
 }
 
-.near{
+.near{/*!!!!!!!!!!!!to delete*/
     position: relative;
     margin-right: 400px;
     float: right;
@@ -149,7 +142,6 @@ table input[type="text"] {
 
 input[type="submit"]{
     margin: 30px 600px;
-    padding: 10px 2px;
     font-weight: 700;
     color: white;
     text-decoration: none;

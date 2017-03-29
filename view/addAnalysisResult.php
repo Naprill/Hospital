@@ -6,19 +6,30 @@ spl_autoload_register(function ($class_name) {
 $selectObj = new Select();
 $addresses = $selectObj->selectAll("Address");
 $diagnoses = $selectObj->selectAll("Diagnoses");
+$patients = $selectObj->selectAll("Patients");
 $current_analysis_name = $selectObj->selectAnalysis($_GET['analysis_id']);
 $parameters = $selectObj->selectParameters($_GET['analysis_id']);
 
 if (isset($_POST['send'])){
-
     $insertObj = new Insert();
+
     $newPatientId = 0;
+    $patient_name = trim($_POST['patient_name']);
+    $patient_id = trim($_POST['patient_id']);
+
+    if(is_numeric($_POST['patient_id'])){
+        // додаємо аналіз наявного у базі пацієнта
+        $newPatientId = $_POST['patient_id'];
+    }
+    else{
+        // додаємо аналіз нового пацієнта
         $newPatientId = $insertObj->insertPatient(
-            $_POST['name'],
-            $_POST['age'],
+            $_POST['patient_name'],
+            $_POST['birthdate'],
             $_POST['sex'],
             $_POST['address']
         );
+    }
 
     //перевірка чи є ід
     $newOrderId = 0;
@@ -34,7 +45,7 @@ if (isset($_POST['send'])){
         );
     }
     else{
-        echo "Patient was not added";
+        echo "Patient was not added<br>";
     }
 
     if($newOrderId){
@@ -60,12 +71,16 @@ if (isset($_POST['send'])){
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link href='http://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
+      <link href='http://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
 
-    <link rel="stylesheet" href="../css/style.css">
+      <link rel="stylesheet" href="../css/style.css">
+
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+      <script type="text/javascript" src="../js/datalist.js"></script>
 
     <title>Чернівецька обласна лікарня</title>
   </head>
@@ -73,12 +88,24 @@ if (isset($_POST['send'])){
 
   <?php include "header.php"; ?>
 
+  <h2>Додавання аналізу</h2>
+
 <form action="addAnalysisResult.php?analysis_id=<?php echo $_GET['analysis_id']; ?>" method="post">
+
+    <div class="info">
+        <label>Пацієнт:
+            <input id="list" name="patient_name" list="name">
+            <input id="list-hidden" type="hidden" name="patient_id" >
+            <datalist id="name">
+                <?php foreach ($patients as $patient_name) : ?>
+                    <option data-value='<?php echo $patient_name['patient_id']; ?>'><?php echo $patient_name['patient_name']; ?></option>;
+                <?php endforeach; ?>
+            </datalist>
+        </label>
+    </div>
+
   <div class="info">
-    <label>Пацієнт: <input class="input70" name="name" type="text"></label>
-  </div>
-  <div class="info">
-    <label>Дата народження: <input name="age" type="date"></label>
+    <label>Дата народження: <input name="birthdate" type="date"></label>
   </div>
   <div class="info">
     <label>Стать:
@@ -127,7 +154,7 @@ if (isset($_POST['send'])){
                       echo "відсутній";
                   else if($parameter['norm_min']==0)
                       echo " < ".$parameter['norm_max'];
-                  else if($parameter['norm_max']==0)
+                  else if($parameter['norm_max']==1000)
                       echo " > ".$parameter['norm_min'];
                   else
                       echo "від ".$parameter['norm_min']." до ".$parameter['norm_max'];

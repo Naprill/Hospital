@@ -23,19 +23,46 @@ $searchResult = $database->getRows($query);
 
 if (isset($_POST['send'])) {
 
-    if (isset($_POST['address'])){
-        $query = $query." WHERE 
-                Address.address_id = ? ";
-        $searchResult = $database->getRows($query,[$_POST['address']]);
+    $address_id = $_POST['address'];
+    $parameter_id = $_POST['parameter'];
+    $params = array();
+    $one_was = false;
+
+    if (strlen($address_id) != 0 || strlen($parameter_id) != 0){
+        $query = $query." WHERE ";
     }
 
-    if (isset($_POST['parameter'])){
-        $query = $query." WHERE 
-                .address_id = ?; ";
-        $searchResult = $database->getRows($query,[$_POST['address']]);
+    if (strlen($address_id) != 0){
+        $query = $query." Address.address_id = ? ";
+        $one_was = true;
+        array_push($params, $address_id);
     }
 
+    if (strlen($parameter_id)){
+        if ($one_was) {
+            $query = $query." AND";
+        }
+
+        $query = $query."
+            Results.result_id IN(
+                SELECT 
+                    Results.result_id 
+                FROM 
+                    Results 
+                    JOIN Parameters ON Results.parameter_id = Parameters.parameter_id 
+                WHERE 
+                    Parameters.parameter_id = ?
+                    AND(
+                        Results.result <= Parameters.norm_min 
+                        OR Results.result >= Parameters.norm_max
+                    )
+            ) ";
+        $one_was = true;
+        array_push($params, $parameter_id);
+    }
+    $searchResult = $database->getRows($query, $params);
 }
+
 
 ?>
 
@@ -56,11 +83,11 @@ if (isset($_POST['send'])) {
     <?php include "header.php"; ?>
 </header>
 
-<h2>Знайти аналіз</h2>
+<h2>Знайти аналізи за адресою і параметром</h2>
 
 <form action="searchAnalysis.php" method="post">
     <div class="info">
-        <label>Адреса:
+        <label>Місце проживання:
             <select name="address">
                 <?php foreach ($addresses as $address) : ?>
                     <option value='<?php echo $address['address_id']; ?>'><?php echo $address['address_name']; ?></option>;
@@ -72,7 +99,7 @@ if (isset($_POST['send'])) {
         <label>Параметр не в нормі:
             <select name="parameter">
                 <?php foreach ($parameters as $parameter) : ?>
-                    <option value='<?php echo $parameter['']; ?>'><?php echo $address['']; ?></option>;
+                    <option value='<?php echo $parameter['parameter_id']; ?>'><?php echo $parameter['parameter_name']; ?></option>;
                 <?php endforeach; ?>
             </select>
         </label>
