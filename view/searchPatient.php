@@ -22,7 +22,7 @@ $searchResult = $database->getRows($query);
 
 if (isset($_POST['send'])) {
 
-    var_dump($_POST);
+    //var_dump($_POST);
     if (is_numeric($_POST['patient_id'])){
        // echo 'id';
     }
@@ -30,9 +30,9 @@ if (isset($_POST['send'])) {
         //echo 'no_id';
 
     }
-    if (isset($_POST['name'])){
+    if (strlen($_POST['patient_id']) != 0 ){
         $query = $query." WHERE
-                Patient.patient_id = ?; ";
+                Patients.patient_id = ?; ";
         $searchResult = $database->getRows($query,[$_POST['patient_id']]);
     }
 
@@ -51,8 +51,10 @@ if (isset($_POST['send'])) {
     <link rel="stylesheet" href="../css/style.css">
 
     <title>Чернівецька обласна лікарня</title>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="../js/DataList.js"></script>
+
+    <script src="../js/datalist.js"></script>
 
 </head>
 <body >
@@ -60,15 +62,14 @@ if (isset($_POST['send'])) {
     <?php include "header.php"; ?>
 </header>
 
-<h2>Знайти пацієнта</h2>
+<h2>Знайти аналізи пацієнта</h2>
 
 <form action="searchPatient.php" method="post">
     <div class="info">
-        <label>Пацієнт:
+        <label>Ім'я пацієнта:
             <input id="list" type="text" name="patient_name" list="name">
             <input id="list-hidden" type="hidden" name="patient_id">
             <datalist id="name">
-<!--                javascript!!!!!!!!!!!!!-->
                 <?php foreach ($patients as $patient) : ?>
                     <option data-value="<?php echo $patient['patient_id']?>"><?php echo $patient['patient_name']; ?></option>;
                 <?php endforeach; ?>
