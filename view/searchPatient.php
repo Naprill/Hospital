@@ -22,10 +22,18 @@ $searchResult = $database->getRows($query);
 
 if (isset($_POST['send'])) {
 
+    var_dump($_POST);
+    if (is_numeric($_POST['patient_id'])){
+       // echo 'id';
+    }
+    else{
+        //echo 'no_id';
+
+    }
     if (isset($_POST['name'])){
-        $query = $query." WHERE 
-                Patient.patient_ia = ?; ";
-        $searchResult = $database->getRows($query,[$_POST['patient_name']]);
+        $query = $query." WHERE
+                Patient.patient_id = ?; ";
+        $searchResult = $database->getRows($query,[$_POST['patient_id']]);
     }
 
 }
@@ -43,6 +51,9 @@ if (isset($_POST['send'])) {
     <link rel="stylesheet" href="../css/style.css">
 
     <title>Чернівецька обласна лікарня</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="../js/DataList.js"></script>
+
 </head>
 <body >
 <header>
@@ -54,7 +65,8 @@ if (isset($_POST['send'])) {
 <form action="searchPatient.php" method="post">
     <div class="info">
         <label>Пацієнт:
-            <input type="text" name="patient_name" list="name">
+            <input id="list" type="text" name="patient_name" list="name">
+            <input id="list-hidden" type="hidden" name="patient_id">
             <datalist id="name">
 <!--                javascript!!!!!!!!!!!!!-->
                 <?php foreach ($patients as $patient) : ?>
@@ -64,7 +76,11 @@ if (isset($_POST['send'])) {
         </label>
     </div><input type="submit" name="send" value="Знайти" required/>
 </form>
+<script>
 
+
+
+</script>
 
 <table class="searchTable">
     <caption>Результат пошуку
