@@ -146,16 +146,16 @@ if (isset($_POST['send'])){
         <?php foreach ($parameters as $parameter) : ?>
           <tr>
             <th scope="row"> <?php echo $parameter['parameter_name'] ?> </th>
-            <td> <input name="<?php echo $parameter['parameter_id']; ?>" title="<?php echo $parameter['parameter_name']; ?>" min="0" type="number"> </td>
+            <td> <input name="<?php echo $parameter['parameter_id']; ?>" title="<?php echo $parameter['parameter_name']; ?>" min="0" step="0.1" value="0" type="number"> </td>
             <td> <?php echo $parameter['unit']?> </td>
               <td>
                   <?php
                   if($parameter['norm_min']==0 && $parameter['norm_max']==0)
                       echo "відсутній";
-                  else if($parameter['norm_min']==0)
-                      echo " < ".$parameter['norm_max'];
                   else if($parameter['norm_max']==1000)
                       echo " > ".$parameter['norm_min'];
+                  else if($parameter['norm_min']==0)
+                      echo " < ".$parameter['norm_max'];
                   else
                       echo "від ".$parameter['norm_min']." до ".$parameter['norm_max'];
                   ?>
@@ -187,5 +187,6 @@ if (isset($_POST['send'])){
     </div>
     <input type="submit" name="send" value="Зберегти у базі даних" required/>
 </form>
+  <img id="footer" src="../css/footer.jpg">
   </body>
 </html>

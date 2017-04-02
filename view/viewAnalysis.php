@@ -107,13 +107,13 @@ WHERE
                         echo "відсутній";
                         if($parameter['result']!=0)$norm_hit = false;
                     }
-                    else if($parameter['norm_min']==0){
-                        echo " < ".$parameter['norm_max'];
-                        if($parameter['result'] >= $parameter['norm_max'])$norm_hit = false;
-                    }
                     else if($parameter['norm_max']==1000){
                         echo " > ".$parameter['norm_min'];
                         if($parameter['result'] <= $parameter['norm_min'])$norm_hit = false;
+                    }
+                    else if($parameter['norm_min']==0){
+                        echo " < ".$parameter['norm_max'];
+                        if($parameter['result'] >= $parameter['norm_max'])$norm_hit = false;
                     }
                     else{
                         echo "від ".$parameter['norm_min']." до ".$parameter['norm_max'];

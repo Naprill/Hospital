@@ -135,6 +135,6 @@ if (isset($_POST['send'])) {
 
     </tbody>
 </table>
-
+<img id="footer" src="../css/footer.jpg">
 </body>
 </html>

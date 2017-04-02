@@ -10,7 +10,7 @@ body {
     color: #384047;
 }
 a img{
-    width: 1335px;
+    width: 1330px;
 }
 
 h2{
@@ -185,4 +185,8 @@ input[type="submit"]:active{
 }
 .attention{
     border: #041f6e solid;
+}
+
+#footer{
+    width: 1330px;
 }
