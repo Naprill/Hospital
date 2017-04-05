@@ -143,6 +143,6 @@ WHERE
     <div class="info">
         <label>Місце здачі аналізу: <?php echo $patientData['laboratory'] ?> </label>
     </div>
-
+<img class="mockup" src="../css/footer.jpg">
 </body>
 </html>

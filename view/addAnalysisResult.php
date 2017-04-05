@@ -187,6 +187,6 @@ if (isset($_POST['send'])){
     </div>
     <input type="submit" name="send" value="Зберегти у базі даних" required/>
 </form>
-  <img id="footer" src="../css/footer.jpg">
+  <img class="mockup" src="../css/footer.jpg">
   </body>
 </html>

@@ -21,7 +21,7 @@ h2{
 
 ul {
     list-style-type: none;
-    margin: 0 0 50px 0;
+    margin: 0 0 5px 0;
     padding: 0;
     overflow: hidden;
     background-color: #16446e;
@@ -187,6 +187,6 @@ input[type="submit"]:active{
     border: #041f6e solid;
 }
 
-#footer{
+.mockup{
     width: 1330px;
 }

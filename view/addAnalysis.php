@@ -92,6 +92,6 @@ if (isset($_POST['send2'])){
     </div>
     <input type="submit" name="send2" value="Додати" required/>
 </form>
-<img id="footer" src="../css/footer.jpg">
+<img class="mockup" src="../css/footer.jpg">
 </body>
 </html>
