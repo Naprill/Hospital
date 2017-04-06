@@ -76,7 +76,9 @@ if (isset($_POST['send'])){
 
       <link href='http://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
 
-      <link rel="stylesheet" href="../css/style.css">
+      <link rel="stylesheet/less" type="text/css" href="../css/style.less" />
+      <script src="../js/less.min.js"></script>
+
 
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
