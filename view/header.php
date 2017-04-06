@@ -26,4 +26,11 @@ $analyzes = $selectObj->selectAll("Analyzes");
             <a  href="searchPatient.php">Знайти аналізи пацієнта</a>
         </div>
     </li>
+      <li class="dropdown">
+          <a href="javascript:void(0)" class="dropdown_button">Статистика</a>
+          <div class="dropdown-content">
+              <a  href="patientsDiagnosisDiagram.php">Діаграма розподілу пацієнтів по діагнозу</a>
+              <a  href="searchPatient.php">Знайти аналізи пацієнта</a>
+          </div>
+      </li>
 </ul>
