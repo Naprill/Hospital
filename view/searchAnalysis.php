@@ -114,6 +114,7 @@ if (isset($_POST['send'])) {
     </caption>
     <thead>
     <tr>
+        <th class="subheader" scope="col" >№</th>
         <th class="subheader" scope="col" >Перегляд</th>
         <th class="subheader" scope="col" >№ зам.</th>
         <th class="subheader" scope="col" >Ім'я</th>
@@ -124,8 +125,9 @@ if (isset($_POST['send'])) {
 
     <tbody>
 
-    <?php foreach ($searchResult as $result) : ?>
+    <?php  $i=0; foreach ($searchResult as $result) : ?>
         <tr>
+            <td scope="row"> <?php echo $i; $i++; ?> </td>
             <td><a class="button_view" target="_blank" href="viewAnalysis.php?order_id=<?php echo $result['order_id']; ?>"> </a></td>
             <td> <?php echo $result['order_id']?> </td>
             <td scope="row"> <?php echo $result['patient_name'] ?> </td>
