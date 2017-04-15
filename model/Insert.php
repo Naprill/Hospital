@@ -45,16 +45,16 @@ class Insert
         return $newPatientId;
     }
 
-    public  function insertOrder($patientId, $diagnosis, $analysis, $coverDiagnosis, $receivingDate, $completionDate, $laboratory){
+    public  function insertOrder($patientId, $diagnosis, $analysis, $coverDiagnosis, $completionDate, $laboratory, $treatment){
         //echo $orderId;
-        $this->database->insertRow("INSERT INTO Orders(patient_id, diagnosis_id, analysis_id, cover_diagnosis, receiving_date, completion_date, laboratory) VALUES (?, ?, ?, ?, ?, ?, ?)",[
+        $this->database->insertRow("INSERT INTO Orders(patient_id, diagnosis_id, analysis_id, cover_diagnosis, completion_date, laboratory, treatment) VALUES (?, ?, ?, ?, ?, ?, ?)",[
             $patientId,
             $diagnosis,
             $analysis,
             $coverDiagnosis,
-            $receivingDate,
             $completionDate,
-            $laboratory
+            $laboratory,
+            $treatment
         ]);
         $newOrderId = $this->database->getLastInsertId();
         return $newOrderId;

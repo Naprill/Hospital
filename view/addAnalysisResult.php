@@ -39,9 +39,9 @@ if (isset($_POST['send'])){
             $_POST['diagnosis'],
             $_GET['analysis_id'], ///!!!
             $_POST['cover_diagnosis'],
-            $_POST['receiving_date'],
             $_POST['completion_date'],
-            $_POST['place']
+            $_POST['place'],
+            $_POST['treatment']
         );
     }
     else{
@@ -126,11 +126,6 @@ if (isset($_POST['send'])){
           </select>
       </label>
     </div>
-    <div class="info">
-      <label>Дата отримання матеріалу лабораторією: <input name="receiving_date" type="date"></label>
-    </div>
-
-
     <table>
       <caption><?php echo $current_analysis_name; ?>
       </caption>
@@ -186,6 +181,9 @@ if (isset($_POST['send'])){
     </div>
     <div class="info">
         <label>Місце здачі аналізу: <input name="place" type="text"></label>
+    </div>
+    <div class="info">
+        <label>Проведене лікування: <input class="input70" name="treatment" type="text"></label>
     </div>
     <input type="submit" name="send" value="Зберегти у базі даних" required/>
 </form>

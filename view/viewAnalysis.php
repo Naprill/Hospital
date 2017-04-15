@@ -11,10 +11,10 @@ $patientData = $database->getRow("SELECT
 	Patients.birthdate, 
 	Patients.sex,
 	Address.address_name, 
-	Orders.receiving_date, 
 	Orders.completion_date,
 	Orders.cover_diagnosis,
-	Orders.laboratory,
+	Orders.laboratory, 
+	Orders.treatment,
 	Diagnoses.diagnosis_name 
 FROM 
 	Patients 
@@ -79,12 +79,9 @@ WHERE
     <div class="info">
         <label>Місце проживання: <?php echo $patientData['address_name'] ?> </label>
     </div>
-    <div class="info">
-        <label>Дата отримання матеріалу лабораторією: <?php echo $patientData['receiving_date'] ?></label>
-    </div>
 
 
-    <table>
+    <table class="viewTable">
         <caption> <?php echo $parametersData[1]['analysis_name'] ?>
         </caption>
         <thead>
@@ -143,6 +140,9 @@ WHERE
     </div>
     <div class="info">
         <label>Місце здачі аналізу: <?php echo $patientData['laboratory'] ?> </label>
+    </div>
+    <div class="info">
+        <label>Проведене лікування: <?php echo $patientData['treatment'] ?></label>
     </div>
 <img class="mockup" src="../css/footer.jpg">
 </body>
