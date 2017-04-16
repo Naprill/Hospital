@@ -3,6 +3,7 @@
 spl_autoload_register(function ($class_name) {
     include "../model/". $class_name . '.php';
 });
+
 $database = new Database();
 $addresses = $database->getRows("SELECT * FROM Address");
 $parameters = $database->getRows("SELECT * FROM Parameters");
@@ -22,9 +23,52 @@ $query = "SELECT DISTINCT
 $searchResult = $database->getRows($query);
 
 if (isset($_POST['send'])) {
-
     $address_id = $_POST['address'];
     $parameter_id = $_POST['parameter'];
+    $params = array();
+    $one_was = false;
+
+    if (strlen($address_id) != 0 || strlen($parameter_id) != 0){
+        $query = $query." WHERE ";
+    }
+
+    if (strlen($address_id) != 0){
+        $query = $query." Address.address_id = ? ";
+        $one_was = true;
+        array_push($params, $address_id);
+    }
+
+    if (strlen($parameter_id)){
+        if ($one_was) {
+            $query = $query." AND";
+        }
+
+        $query = $query."
+            Results.result_id IN(
+                SELECT 
+                    Results.result_id 
+                FROM 
+                    Results 
+                    JOIN Parameters ON Results.parameter_id = Parameters.parameter_id 
+                WHERE 
+                    Parameters.parameter_id = ?
+                    AND(
+                        Results.result <= Parameters.norm_min 
+                        OR Results.result >= Parameters.norm_max
+                    )
+            ) ";
+        $one_was = true;
+        array_push($params, $parameter_id);
+    }
+    $searchResult = $database->getRows($query, $params);
+
+    header("Location: searchAnalysis.php?address_id=".$address_id."&parameter_id=".$parameter_id); exit;
+}
+
+if(strlen($_GET[address_id] != 0) or strlen($_GET[parameter_id] != 0)){
+
+    $address_id = $_GET[address_id];
+    $parameter_id = $_GET[parameter_id];
     $params = array();
     $one_was = false;
 
@@ -90,8 +134,9 @@ if (isset($_POST['send'])) {
     <div class="info">
         <label>Місце проживання:
             <select name="address">
+                    <option value="">---</option>
                 <?php foreach ($addresses as $address) : ?>
-                    <option value='<?php echo $address['address_id']; ?>'><?php echo $address['address_name']; ?></option>;
+                    <option <?php if($address['address_id'] == $_GET[address_id]) echo "selected "?> value='<?php echo $address['address_id']; ?>'><?php echo $address['address_name']; ?></option>;
                 <?php endforeach; ?>
             </select>
         </label>
@@ -99,8 +144,9 @@ if (isset($_POST['send'])) {
     <div class="info">
         <label>Параметр не в нормі:
             <select name="parameter">
+                    <option value="">---</option>
                 <?php foreach ($parameters as $parameter) : ?>
-                    <option value='<?php echo $parameter['parameter_id']; ?>'><?php echo $parameter['parameter_name']; ?></option>;
+                    <option <?php if($parameter['parameter_id'] == $_GET[parameter_id]) echo "selected "?> value='<?php echo $parameter['parameter_id']; ?>'><?php echo $parameter['parameter_name']; ?></option>;
                 <?php endforeach; ?>
             </select>
         </label>
