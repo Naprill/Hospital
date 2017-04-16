@@ -7,6 +7,7 @@ spl_autoload_register(function ($class_name) {
 $database = new Database();
 $addresses = $database->getRows("SELECT * FROM Address");
 $parameters = $database->getRows("SELECT * FROM Parameters");
+
 $query = "SELECT DISTINCT
                 Patients.patient_name,
                 Orders.completion_date, 
@@ -22,17 +23,19 @@ $query = "SELECT DISTINCT
 
 $searchResult = $database->getRows($query);
 
-if (isset($_POST['send'])) {
+function searchAnalysis($query){
+    $database = new Database();
+    $params = array();
+    $one_was = false;
+
     $address_id = $_POST['address'];
     $parameter_id = $_POST['parameter'];
-    $params = array();
-    $one_was = false;
 
-    if (strlen($address_id) != 0 || strlen($parameter_id) != 0){
+    if (strlen($address_id) || strlen($parameter_id)){
         $query = $query." WHERE ";
     }
 
-    if (strlen($address_id) != 0){
+    if (strlen($address_id)){
         $query = $query." Address.address_id = ? ";
         $one_was = true;
         array_push($params, $address_id);
@@ -61,52 +64,12 @@ if (isset($_POST['send'])) {
         array_push($params, $parameter_id);
     }
     $searchResult = $database->getRows($query, $params);
-
-    header("Location: searchAnalysis.php?address_id=".$address_id."&parameter_id=".$parameter_id); exit;
+    return $searchResult;
 }
 
-if(strlen($_GET[address_id] != 0) or strlen($_GET[parameter_id] != 0)){
-
-    $address_id = $_GET[address_id];
-    $parameter_id = $_GET[parameter_id];
-    $params = array();
-    $one_was = false;
-
-    if (strlen($address_id) != 0 || strlen($parameter_id) != 0){
-        $query = $query." WHERE ";
-    }
-
-    if (strlen($address_id) != 0){
-        $query = $query." Address.address_id = ? ";
-        $one_was = true;
-        array_push($params, $address_id);
-    }
-
-    if (strlen($parameter_id)){
-        if ($one_was) {
-            $query = $query." AND";
-        }
-
-        $query = $query."
-            Results.result_id IN(
-                SELECT 
-                    Results.result_id 
-                FROM 
-                    Results 
-                    JOIN Parameters ON Results.parameter_id = Parameters.parameter_id 
-                WHERE 
-                    Parameters.parameter_id = ?
-                    AND(
-                        Results.result <= Parameters.norm_min 
-                        OR Results.result >= Parameters.norm_max
-                    )
-            ) ";
-        $one_was = true;
-        array_push($params, $parameter_id);
-    }
-    $searchResult = $database->getRows($query, $params);
+if(isset($_POST['send'])){
+    $searchResult = searchAnalysis($query);
 }
-
 
 ?>
 
@@ -136,7 +99,7 @@ if(strlen($_GET[address_id] != 0) or strlen($_GET[parameter_id] != 0)){
             <select name="address">
                     <option value="">---</option>
                 <?php foreach ($addresses as $address) : ?>
-                    <option <?php if($address['address_id'] == $_GET[address_id]) echo "selected "?> value='<?php echo $address['address_id']; ?>'><?php echo $address['address_name']; ?></option>;
+                    <option <?php if($address['address_id'] == $_POST['address']) echo "selected "?> value='<?php echo $address['address_id']; ?>'><?php echo $address['address_name']; ?></option>;
                 <?php endforeach; ?>
             </select>
         </label>
@@ -146,7 +109,7 @@ if(strlen($_GET[address_id] != 0) or strlen($_GET[parameter_id] != 0)){
             <select name="parameter">
                     <option value="">---</option>
                 <?php foreach ($parameters as $parameter) : ?>
-                    <option <?php if($parameter['parameter_id'] == $_GET[parameter_id]) echo "selected "?> value='<?php echo $parameter['parameter_id']; ?>'><?php echo $parameter['parameter_name']; ?></option>;
+                    <option <?php if($parameter['parameter_id'] == $_POST['parameter']) echo "selected "?> value='<?php echo $parameter['parameter_id']; ?>'><?php echo $parameter['parameter_name']; ?></option>;
                 <?php endforeach; ?>
             </select>
         </label>
