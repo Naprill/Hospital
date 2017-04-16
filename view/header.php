@@ -8,7 +8,7 @@ $analyzes = $selectObj->selectAll("Analyzes");
           <a href="javascript:void(0)" class="dropdown_button">Змінити шаблони</a>
           <div class="dropdown-content">
               <a  href="addAnalysis.php">Створити новий шаблон додавання аналізу</a>
-<!--              <a  href="#">Редагувати шаблон додавання аналізу</a>-->
+              <a  href="addDiagnosis.php">Редагувати діагнози</a>
           </div>
       </li>
       <li class="dropdown">

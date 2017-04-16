@@ -16,7 +16,7 @@ class Insert
     }
 
     public function insertAnalysis($name){
-        $this->database->insertRow("INSERT INTO Analyzes(analysis_name) VALUES (?)",[
+        $this->database->insertOrDeleteRow("INSERT INTO Analyzes(analysis_name) VALUES (?)",[
             $name
         ]);
         $newAnalysisId = $this->database->getLastInsertId();
@@ -25,7 +25,7 @@ class Insert
 
 
     public function insertParameter($name, $unit, $normMin, $normMax, $analysisId){
-        $this->database->insertRow("INSERT INTO Parameters(parameter_name, unit, norm_min, norm_max, analysis_id) VALUES (?,?,?,?,?)",[
+        $this->database->insertOrDeleteRow("INSERT INTO Parameters(parameter_name, unit, norm_min, norm_max, analysis_id) VALUES (?,?,?,?,?)",[
             $name,
             $unit,
             $normMin,
@@ -35,7 +35,7 @@ class Insert
     }
 
     public function insertPatient($name, $age, $sex, $address){
-        $this->database->insertRow("INSERT INTO Patients(patient_name, birthdate, sex, address_id) VALUES (?, ?, ?, ?)", [
+        $this->database->insertOrDeleteRow("INSERT INTO Patients(patient_name, birthdate, sex, address_id) VALUES (?, ?, ?, ?)", [
                 $name,
                 $age,
                 $sex,
@@ -47,7 +47,7 @@ class Insert
 
     public  function insertOrder($patientId, $diagnosis, $analysis, $coverDiagnosis, $completionDate, $laboratory, $treatment){
         //echo $orderId;
-        $this->database->insertRow("INSERT INTO Orders(patient_id, diagnosis_id, analysis_id, cover_diagnosis, completion_date, laboratory, treatment) VALUES (?, ?, ?, ?, ?, ?, ?)",[
+        $this->database->insertOrDeleteRow("INSERT INTO Orders(patient_id, diagnosis_id, analysis_id, cover_diagnosis, completion_date, laboratory, treatment) VALUES (?, ?, ?, ?, ?, ?, ?)",[
             $patientId,
             $diagnosis,
             $analysis,
@@ -62,10 +62,16 @@ class Insert
 
 
     public function insertResult($parameterId, $orderId, $result){
-        $this->database->insertRow("INSERT INTO Results(parameter_id, order_id, result) VALUES (?, ?, ?)",[
+        $this->database->insertOrDeleteRow("INSERT INTO Results(parameter_id, order_id, result) VALUES (?, ?, ?)",[
             $parameterId,
             $orderId,
             $result
+        ]);
+    }
+
+    public function insertDiagnosis($diagnosis_name){
+        $this->database->insertOrDeleteRow("INSERT INTO Diagnoses(diagnosis_name) VALUES (?)",[
+            $diagnosis_name
         ]);
     }
 }

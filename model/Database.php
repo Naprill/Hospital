@@ -49,7 +49,7 @@ class Database
         }
     }
 
-    public function insertRow($query, $params)
+    public function insertOrDeleteRow($query, $params)
     {
         try {
             $statement = $this->connection->prepare($query);

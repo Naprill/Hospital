@@ -185,7 +185,7 @@ if (isset($_POST['send'])){
     <div class="info">
         <label>Проведене лікування: <input class="input70" name="treatment" type="text"></label>
     </div>
-    <input type="submit" name="send" value="Зберегти у базі даних" required/>
+    <input type="submit" name="send" value="Зберегти аналіз" required/>
 </form>
   <img class="mockup" src="../css/footer.jpg">
   </body>
