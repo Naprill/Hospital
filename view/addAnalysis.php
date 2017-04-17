@@ -52,7 +52,7 @@ if (isset($_POST['send2'])){
 
     <input type="submit" name="send1" value="Створити" required/>
 </form>
-
+<hr>
 <h2>Додавання параметрів</h2>
 <form action="addAnalysis.php" method="post">
 
@@ -75,12 +75,7 @@ if (isset($_POST['send2'])){
             <input name="unit" title="unit" type="text">
         </label>
     </div>
-    <div class="tips">
-        Нижня - Верхня : Результат <br>
-        &emsp; &emsp;0 - 0 : відсутній <br>
-        &emsp; &emsp;n - 1000 : > n <br>
-        &emsp; &emsp;0 - n : < n <br>
-    </div>
+
     <div class="info">
         <label>Нижня межа норми :
             <input name="norm_min" title="norm_min" type="text">
@@ -93,6 +88,42 @@ if (isset($_POST['send2'])){
     </div>
     <input type="submit" name="send2" value="Додати" required/>
 </form>
+<div class="tips">
+    <table border>
+        <caption>Підказка по створенню параметра
+        </caption>
+        <thead>
+        <tr>
+            <th class="subheader" scope="col" >Нижня межа</th>
+            <th class="subheader" scope="col" >Верхня межа</th>
+            <th class="subheader" scope="col" >Результат</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+            <td> <span>number</span> </td>
+            <td> 1000 </td>
+            <td> > <span>number</span> </td>
+        </tr>
+        <tr>
+            <td> 0 </td>
+            <td> <span>number</span> </td>
+            <td> < <span>number</span> </td>
+        </tr>
+        <tr>
+            <td> <span>number1</span> </td>
+            <td> <span>number2</span> </td>
+            <td> від <span>number1</span> до <span>number2</span> </td>
+        </tr>
+        <tr>
+            <td> 0 </td>
+            <td> 0 </td>
+            <td> відсутній </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 <img class="mockup" src="../css/footer.jpg">
 </body>
 </html>
