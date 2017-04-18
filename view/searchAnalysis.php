@@ -7,6 +7,7 @@ spl_autoload_register(function ($class_name) {
 $database = new Database();
 $addresses = $database->getRows("SELECT * FROM Address");
 $parameters = $database->getRows("SELECT * FROM Parameters");
+$diagnoses = $database->getRows("SELECT * FROM Diagnoses");
 
 $query = "SELECT DISTINCT
                 Patients.patient_name,
@@ -28,11 +29,21 @@ function searchAnalysis($query){
     $params = array();
     $one_was = false;
 
+    $sex = $_POST['sex'];
     $address_id = $_POST['address'];
     $parameter_id = $_POST['parameter'];
+    $diagnosis_id = $_POST['diagnosis'];
+    $treatment = $_POST['treatment'];
 
-    if (strlen($address_id) || strlen($parameter_id)){
+    if (strlen($sex) || strlen($address_id) || strlen($parameter_id) || strlen($diagnosis_id) || strlen($treatment)){
         $query = $query." WHERE ";
+    }
+
+    if (strlen($sex)){
+        $sex = "$sex";
+        $query = $query." Patients.sex LIKE ? ";
+        $one_was = true;
+        array_push($params, $sex);
     }
 
     if (strlen($address_id)){
@@ -63,6 +74,25 @@ function searchAnalysis($query){
         $one_was = true;
         array_push($params, $parameter_id);
     }
+
+    if(strlen($diagnosis_id)){
+        if ($one_was) {
+            $query = $query." AND";
+        }
+        $query = $query." Orders.diagnosis_id = ? ";
+        $one_was = true;
+        array_push($params, $diagnosis_id);
+    }
+
+    if (strlen($treatment)){
+        //parse_str($treatment);
+        $treatment = "%$treatment%";
+        $query = $query." Orders.treatment LIKE ? ";
+        //$query = $query."OR Orders.treatment LIKE ?";
+        $one_was = true;
+        array_push($params, $treatment);
+    }
+
     $searchResult = $database->getRows($query, $params);
     return $searchResult;
 }
@@ -91,9 +121,18 @@ if(isset($_POST['send'])){
     <?php include "header.php"; ?>
 </header>
 
-<h2>Знайти аналізи за адресою і параметром</h2>
+<h2>Знайти аналізи за критеріями</h2>
 
 <form action="searchAnalysis.php" method="post">
+    <div class="info">
+        <label>Стать:
+            <select name="sex">
+                <option value="">---</option>
+                <option <?php if($_POST['sex']=="Female") echo "selected "?> value='Female'>Жіноча</option>
+                <option <?php if($_POST['sex']=="Male") echo "selected "?> value='Male'>Чоловіча</option>
+            </select>
+        </label>
+    </div>
     <div class="info">
         <label>Місце проживання:
             <select name="address">
@@ -112,6 +151,21 @@ if(isset($_POST['send'])){
                     <option <?php if($parameter['parameter_id'] == $_POST['parameter']) echo "selected "?> value='<?php echo $parameter['parameter_id']; ?>'><?php echo $parameter['parameter_name']; ?></option>;
                 <?php endforeach; ?>
             </select>
+        </label>
+    </div>
+    <div class="info">
+        <label>Діагноз:
+            <select name="diagnosis">
+                <option value="">---</option>
+                <?php foreach ($diagnoses as $diagnosis) : ?>
+                    <option <?php if($diagnosis['diagnosis_id'] == $_POST['diagnosis']) echo "selected "?> value='<?php echo $diagnosis['diagnosis_id']; ?>'><?php echo $diagnosis['diagnosis_name']; ?></option>;
+                <?php endforeach; ?>
+            </select>
+        </label>
+    </div>
+    <div class="info">
+        <label>Ключове слово у полі "Проведене лікування":
+            <input class="input20" type="text" name="treatment" value='<?php if(strlen($_POST['treatment'])) echo $_POST['treatment'];?>'>
         </label>
     </div>
     <input type="submit" name="send" value="Знайти" required/>
