@@ -47,6 +47,9 @@ function searchAnalysis($query){
     }
 
     if (strlen($address_id)){
+        if ($one_was) {
+            $query = $query." AND";
+        }
         $query = $query." Address.address_id = ? ";
         $one_was = true;
         array_push($params, $address_id);

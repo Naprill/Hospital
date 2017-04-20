@@ -41,7 +41,7 @@ $analyzes = $selectObj->selectAll("Analyzes");
         <a href="javascript:void(0)" class="dropdown_button">Пошук</a>
         <div class="dropdown-content">
             <a  href="view/searchAnalysis.php">Пошук за критеріями</a>
-            <a  href="view/searchPatient.php">Пошут аналізів пацієнта</a>
+            <a  href="view/searchPatient.php">Пошук аналізів пацієнта</a>
         </div>
     </li>
     <li class="dropdown">
