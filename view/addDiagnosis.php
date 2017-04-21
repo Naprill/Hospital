@@ -46,7 +46,7 @@ $diagnoses = $database->getRows("SELECT * FROM Diagnoses"); ///!!!!!!!
 
 <form action="addDiagnosis.php" method="post">
 
-    <div class="info">
+    <div class="field">
         <label>Назва діагнозу:
             <input name="diagnosis_new" title="diagnosis_new" type="text">
         </label>
@@ -58,7 +58,7 @@ $diagnoses = $database->getRows("SELECT * FROM Diagnoses"); ///!!!!!!!
 <h2>Видалення діагнозу</h2>
 <form action="addDiagnosis.php" method="post">
 
-    <div class="info">
+    <div class="field">
         <label>Виберіть діагноз:
             <select name="diagnosis_delete">
                 <?php foreach ($diagnoses as $diagnosis) : ?>

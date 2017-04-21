@@ -61,13 +61,13 @@ WHERE
 
 <h2>Перегляд аналізу</h2>
 
-    <div class="info">
+    <div class="field">
         <label>Пацієнт: <?php echo $patientData['patient_name'] ?> </label>
     </div>
-    <div class="info">
+    <div class="field">
         <label>Дата народження: <?php echo $patientData['birthdate'] ?> </label>
     </div>
-    <div class="info">
+    <div class="field">
         <label>Стать:
             <?php
             if($patientData['sex']=="Female")
@@ -76,7 +76,7 @@ WHERE
             ?>
         </label>
     </div>
-    <div class="info">
+    <div class="field">
         <label>Місце проживання: <?php echo $patientData['address_name'] ?> </label>
     </div>
 
@@ -129,19 +129,19 @@ WHERE
         </tbody>
     </table>
 
-    <div class="info">
+    <div class="field">
         <label>Заключення: <?php echo $patientData['diagnosis_name'] ?>  </label>
     </div>
-    <div class="info">
+    <div class="field">
         <label>Супутній діагноз: <?php echo $patientData['cover_diagnosis'] ?> </label>
     </div>
-    <div class="info">
+    <div class="field">
         <label>Дата закінчення аналізу: <?php echo $patientData['completion_date'] ?> </label>
     </div>
-    <div class="info">
+    <div class="field">
         <label>Місце здачі аналізу: <?php echo $patientData['laboratory'] ?> </label>
     </div>
-    <div class="info">
+    <div class="field">
         <label>Проведене лікування: <?php echo $patientData['treatment'] ?></label>
     </div>
 <img class="mockup" src="../css/footer.jpg">

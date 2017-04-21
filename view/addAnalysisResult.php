@@ -94,7 +94,7 @@ if (isset($_POST['send'])){
 
 <form action="addAnalysisResult.php?analysis_id=<?php echo $_GET['analysis_id']; ?>" method="post">
 
-    <div class="info">
+    <div class="field">
         <label>Пацієнт:
             <input id="list" name="patient_name" list="name">
             <input id="list-hidden" type="hidden" name="patient_id" >
@@ -106,10 +106,10 @@ if (isset($_POST['send'])){
         </label>
     </div>
 
-  <div class="info">
+  <div class="field">
     <label>Дата народження: <input name="birthdate" type="date"></label>
   </div>
-  <div class="info">
+  <div class="field">
     <label>Стать:
         <select name="sex">
                 <option value='Female'>Жіноча</option>
@@ -117,7 +117,7 @@ if (isset($_POST['send'])){
         </select>
     </label>
   </div>
-    <div class="info">
+    <div class="field">
       <label>Місце проживання:
           <select name="address">
               <?php foreach ($addresses as $address) : ?>
@@ -164,7 +164,7 @@ if (isset($_POST['send'])){
       </tbody>
     </table>
 
-    <div class="info">
+    <div class="field">
         <label>Заключення:
             <select name="diagnosis">
             <?php foreach ($diagnoses as $diagnosis) : ?>
@@ -173,17 +173,17 @@ if (isset($_POST['send'])){
             </select>
         </label>
     </div>
-    <div class="info">
+    <div class="field">
         <label>Супутній діагноз: <input class="input70" name="cover_diagnosis" type="text"></label>
     </div>
-    <div class="info">
+    <div class="field">
         <label>Дата закінчення аналізу: <input name="completion_date" type="date"></label>
     </div>
-    <div class="info">
+    <div class="field">
         <label>Місце здачі аналізу: <input name="place" type="text"></label>
     </div>
-    <div class="info">
-        <label>Проведене лікування: <input class="input70" name="treatment" type="text"></label>
+    <div class="field">
+        <label>Проведене лікування: <textarea rows="5" cols="50"  name="treatment" ></textarea> </label>
     </div>
     <input type="submit" name="send" value="Зберегти аналіз" required/>
 </form>

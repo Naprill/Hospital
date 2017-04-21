@@ -44,7 +44,7 @@ if (isset($_POST['send2'])){
 
 <form action="addAnalysis.php" method="post">
 
-    <div class="info">
+    <div class="field">
         <label>Назва аналізу:
             <input name="analysis" title="analysis" type="text">
         </label>
@@ -56,7 +56,7 @@ if (isset($_POST['send2'])){
 <h2>Додавання параметрів</h2>
 <form action="addAnalysis.php" method="post">
 
-    <div class="info">
+    <div class="field">
         <label>Пакет аналізів:
             <select name="analysis">
                 <?php foreach ($analyzes as $analysis) : ?>
@@ -65,23 +65,23 @@ if (isset($_POST['send2'])){
             </select>
         </label>
     </div>
-    <div class="info">
+    <div class="field">
         <label>Назва параметра:
             <input name="parameter" title="parameter" type="text">
         </label>
     </div>
-    <div class="info">
+    <div class="field">
         <label>Одиниці вимірювання:
             <input name="unit" title="unit" type="text">
         </label>
     </div>
 
-    <div class="info">
+    <div class="field">
         <label>Нижня межа норми :
             <input name="norm_min" title="norm_min" type="text">
         </label>
     </div>
-    <div class="info">
+    <div class="field">
         <label>Верхня межа норми:
             <input name="norm_max" title="norm_max" type="text">
         </label>

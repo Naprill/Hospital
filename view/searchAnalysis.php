@@ -127,49 +127,46 @@ if(isset($_POST['send'])){
 <h2>Знайти аналізи за критеріями</h2>
 
 <form action="searchAnalysis.php" method="post">
-    <div class="info">
-        <label>Стать:
-            <select name="sex">
+    <div class="allFields">
+        <div class="field">
+        <label for="1">Стать:</label>
+            <select id="1" name="sex">
                 <option value="">---</option>
                 <option <?php if($_POST['sex']=="Female") echo "selected "?> value='Female'>Жіноча</option>
                 <option <?php if($_POST['sex']=="Male") echo "selected "?> value='Male'>Чоловіча</option>
             </select>
-        </label>
-    </div>
-    <div class="info">
-        <label>Місце проживання:
-            <select name="address">
+        </div>
+        <div class="field">
+            <label for="2">Місце проживання:</label>
+            <select id="2" name="address">
                     <option value="">---</option>
                 <?php foreach ($addresses as $address) : ?>
                     <option <?php if($address['address_id'] == $_POST['address']) echo "selected "?> value='<?php echo $address['address_id']; ?>'><?php echo $address['address_name']; ?></option>;
                 <?php endforeach; ?>
             </select>
-        </label>
-    </div>
-    <div class="info">
-        <label>Параметр не в нормі:
-            <select name="parameter">
+        </div>
+        <div class="field">
+            <label for="3">Параметр не в нормі:</label>
+            <select id="3" name="parameter">
                     <option value="">---</option>
                 <?php foreach ($parameters as $parameter) : ?>
                     <option <?php if($parameter['parameter_id'] == $_POST['parameter']) echo "selected "?> value='<?php echo $parameter['parameter_id']; ?>'><?php echo $parameter['parameter_name']; ?></option>;
                 <?php endforeach; ?>
             </select>
-        </label>
-    </div>
-    <div class="info">
-        <label>Діагноз:
-            <select name="diagnosis">
+        </div>
+        <div class="field">
+            <label for="4">Заключення:</label>
+            <select id="4" name="diagnosis">
                 <option value="">---</option>
                 <?php foreach ($diagnoses as $diagnosis) : ?>
                     <option <?php if($diagnosis['diagnosis_id'] == $_POST['diagnosis']) echo "selected "?> value='<?php echo $diagnosis['diagnosis_id']; ?>'><?php echo $diagnosis['diagnosis_name']; ?></option>;
                 <?php endforeach; ?>
             </select>
-        </label>
-    </div>
-    <div class="info">
-        <label>Ключове слово у полі "Проведене лікування":
-            <input class="input20" type="text" name="treatment" value='<?php if(strlen($_POST['treatment'])) echo $_POST['treatment'];?>'>
-        </label>
+        </div>
+        <div class="field">
+            <label for="5">Проведене лікування: </label>
+            <input id="5" class="input70" type="text" name="treatment" value='<?php if(strlen($_POST['treatment'])) echo $_POST['treatment'];?>'>
+        </div>
     </div>
     <input type="submit" name="send" value="Знайти" required/>
 </form>

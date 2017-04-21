@@ -66,7 +66,7 @@ if (isset($_POST['send'])) {
 <h2>Знайти аналізи пацієнта</h2>
 
 <form action="searchPatient.php" method="post">
-    <div class="info">
+    <div class="field">
         <label>Ім'я пацієнта:
             <input id="list" type="text" name="patient_name" list="name">
             <input id="list-hidden" type="hidden" name="patient_id">
