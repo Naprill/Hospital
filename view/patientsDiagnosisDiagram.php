@@ -34,8 +34,8 @@ $data[2]["color"] = "rgb(11, 47, 167)";
 
     <link href='http://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.7.2/less.min.js"></script>
-    <link rel="stylesheet" href="../css/style.less">
+    <link rel="stylesheet/less" type="text/css" href="../css/style.less" />
+    <script src="../js/less.min.js"></script>
 
 <!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
