@@ -8,6 +8,7 @@ $database = new Database();
 $addresses = $database->getRows("SELECT * FROM Address");
 $parameters = $database->getRows("SELECT * FROM Parameters");
 $diagnoses = $database->getRows("SELECT * FROM Diagnoses");
+$analyses = $database->getRows("SELECT * FROM Analyzes");
 
 $query = "SELECT DISTINCT
                 Patients.patient_name,
@@ -29,17 +30,46 @@ function searchAnalysis($query){
     $params = array();
     $one_was = false;
 
+    $age_type = $_POST['age'];
     $sex = $_POST['sex'];
     $address_id = $_POST['address'];
+    $analysis_id = $_POST['analysis'];
     $parameter_id = $_POST['parameter'];
     $diagnosis_id = $_POST['diagnosis'];
     $treatment = $_POST['treatment'];
 
-    if (strlen($sex) || strlen($address_id) || strlen($parameter_id) || strlen($diagnosis_id) || strlen($treatment)){
+    if (strlen($age_type) || strlen($sex) || strlen($address_id) || strlen($analysis_id) || strlen($parameter_id) || strlen($diagnosis_id) || strlen($treatment)){
         $query = $query." WHERE ";
     }
 
+    if (strlen($age_type)){
+        if ($one_was) {
+            $query = $query." AND";
+        }
+
+        if($age_type == 18){
+            $query = $query." DATEDIFF( CURDATE( ) , Patients.birthdate ) <= 16071
+                         AND DATEDIFF( CURDATE( ) , Patients.birthdate ) >= 6575 ";
+        }
+        if($age_type == 45){
+            $query = $query." DATEDIFF( CURDATE( ) , Patients.birthdate ) <= 21550
+                         AND DATEDIFF( CURDATE( ) , Patients.birthdate ) > 16071 ";
+        }
+        if($age_type == 60){
+            $query = $query." DATEDIFF( CURDATE( ) , Patients.birthdate ) <= 27029
+                         AND DATEDIFF( CURDATE( ) , Patients.birthdate ) > 21550 ";
+        }
+        if($age_type == 75){
+            $query = $query." DATEDIFF( CURDATE( ) , Patients.birthdate ) <= 32873
+                         AND DATEDIFF( CURDATE( ) , Patients.birthdate ) > 27029 ";
+        }
+        $one_was = true;
+    }
+
     if (strlen($sex)){
+        if ($one_was) {
+            $query = $query." AND";
+        }
         $sex = "$sex";
         $query = $query." Patients.sex LIKE ? ";
         $one_was = true;
@@ -53,6 +83,15 @@ function searchAnalysis($query){
         $query = $query." Address.address_id = ? ";
         $one_was = true;
         array_push($params, $address_id);
+    }
+
+    if (strlen($analysis_id)){
+        if ($one_was) {
+            $query = $query." AND";
+        }
+        $query = $query." Analyzes.analysis_id = ? ";
+        $one_was = true;
+        array_push($params, $analysis_id);
     }
 
     if (strlen($parameter_id)){
@@ -70,8 +109,8 @@ function searchAnalysis($query){
                 WHERE 
                     Parameters.parameter_id = ?
                     AND(
-                        Results.result <= Parameters.norm_min 
-                        OR Results.result >= Parameters.norm_max
+                        Results.result < Parameters.norm_min 
+                        OR Results.result > Parameters.norm_max
                     )
             ) ";
         $one_was = true;
@@ -88,14 +127,28 @@ function searchAnalysis($query){
     }
 
     if (strlen($treatment)){
-        //parse_str($treatment);
-        $treatment = "%$treatment%";
-        $query = $query." Orders.treatment LIKE ? ";
-        //$query = $query."OR Orders.treatment LIKE ?";
-        $one_was = true;
-        array_push($params, $treatment);
-    }
+        if ($one_was) {
+            $query = $query." AND";
+        }
+        //parse $treatment
+        $arr = explode(" ", $treatment);
+        if(sizeof($arr)){
+            $arr[0] = "%$arr[0]%";
+            $query = $query." (Orders.treatment LIKE ? ";
+            array_push($params, $arr[0]);
 
+            for($i=1;$i<sizeof($arr);$i++){
+                $arr[$i] = "%$arr[$i]%";
+                $query = $query."OR Orders.treatment LIKE ? ";
+                array_push($params, $arr[$i]);
+            }
+            $query = $query.") ";
+        }
+         $one_was = true;
+
+
+    }
+    //echo $query;
     $searchResult = $database->getRows($query, $params);
     return $searchResult;
 }
@@ -129,16 +182,26 @@ if(isset($_POST['send'])){
 <form action="searchAnalysis.php" method="post">
     <div class="allFields">
         <div class="field">
-        <label for="1">Стать:</label>
-            <select id="1" name="sex">
+            <label for="age">Вік:</label>
+            <select id="age" name="age">
+                <option value="">---</option>
+                <option <?php if($_POST['age']=="18") echo "selected "?> value='18'>Молодий: 18-44</option>
+                <option <?php if($_POST['age']=="45") echo "selected "?> value='45'>Середній: 45-59</option>
+                <option <?php if($_POST['age']=="60") echo "selected "?> value='60'>Літній: 60-74</option>
+                <option <?php if($_POST['age']=="75") echo "selected "?> value='75'>Старечий: 75-90</option>
+            </select>
+        </div>
+        <div class="field">
+        <label for="sex">Стать:</label>
+            <select id="sex" name="sex">
                 <option value="">---</option>
                 <option <?php if($_POST['sex']=="Female") echo "selected "?> value='Female'>Жіноча</option>
                 <option <?php if($_POST['sex']=="Male") echo "selected "?> value='Male'>Чоловіча</option>
             </select>
         </div>
         <div class="field">
-            <label for="2">Місце проживання:</label>
-            <select id="2" name="address">
+            <label for="address">Місце проживання:</label>
+            <select id="address" name="address">
                     <option value="">---</option>
                 <?php foreach ($addresses as $address) : ?>
                     <option <?php if($address['address_id'] == $_POST['address']) echo "selected "?> value='<?php echo $address['address_id']; ?>'><?php echo $address['address_name']; ?></option>;
@@ -146,8 +209,17 @@ if(isset($_POST['send'])){
             </select>
         </div>
         <div class="field">
-            <label for="3">Параметр не в нормі:</label>
-            <select id="3" name="parameter">
+            <label for="analysis">Вид аналізу:</label>
+            <select id="analysis" name="analysis">
+                <option value="">---</option>
+                <?php foreach ($analyses as $analysis) : ?>
+                    <option <?php if($analysis['analysis_id'] == $_POST['analysis']) echo "selected "?> value='<?php echo $analysis['analysis_id']; ?>'><?php echo $analysis['analysis_name']; ?></option>;
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="field">
+            <label for="parameter">Параметр не в нормі:</label>
+            <select id="parameter" name="parameter">
                     <option value="">---</option>
                 <?php foreach ($parameters as $parameter) : ?>
                     <option <?php if($parameter['parameter_id'] == $_POST['parameter']) echo "selected "?> value='<?php echo $parameter['parameter_id']; ?>'><?php echo $parameter['parameter_name']; ?></option>;
@@ -155,8 +227,8 @@ if(isset($_POST['send'])){
             </select>
         </div>
         <div class="field">
-            <label for="4">Заключення:</label>
-            <select id="4" name="diagnosis">
+            <label for="diagnosis">Заключення:</label>
+            <select id="diagnosis" name="diagnosis">
                 <option value="">---</option>
                 <?php foreach ($diagnoses as $diagnosis) : ?>
                     <option <?php if($diagnosis['diagnosis_id'] == $_POST['diagnosis']) echo "selected "?> value='<?php echo $diagnosis['diagnosis_id']; ?>'><?php echo $diagnosis['diagnosis_name']; ?></option>;
@@ -164,8 +236,8 @@ if(isset($_POST['send'])){
             </select>
         </div>
         <div class="field">
-            <label for="5">Проведене лікування: </label>
-            <input id="5" class="input70" type="text" name="treatment" value='<?php if(strlen($_POST['treatment'])) echo $_POST['treatment'];?>'>
+            <label for="treatment">Проведене лікування: </label>
+            <input id="treatment" class="input70" type="text" name="treatment" value="<?php echo $_POST['treatment'];?>">
         </div>
     </div>
     <input type="submit" name="send" value="Знайти" required/>
