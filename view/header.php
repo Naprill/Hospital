@@ -30,7 +30,7 @@ $analyzes = $selectObj->selectAll("Analyzes");
           <a href="javascript:void(0)" class="dropdown_button">Статистичні діаграми</a>
           <div class="dropdown-content">
               <a  href="patientsDiagnosisDiagram.php">Діаграма розподілу пацієнтів по діагнозу</a>
-              <a  href="searchPatient.php">Порівняльна діаграма розподілу захворюваності по районах</a>
+              <a  href="districtDiagnosisDiagram.php">Порівняльна діаграма розподілу захворюваності по районах</a>
           </div>
       </li>
 </ul>
