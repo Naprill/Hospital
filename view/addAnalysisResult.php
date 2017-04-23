@@ -59,6 +59,7 @@ if (isset($_POST['send'])){
                 );
             }
         }
+        header("Location: viewAnalysis.php?order_id=".$newOrderId); exit;
     }
     else{
         echo "Order was not added";
