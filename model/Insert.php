@@ -32,6 +32,8 @@ class Insert
             $normMax,
             $analysisId
         ]);
+        $newParameterId = $this->database->getLastInsertId();
+        return $newParameterId;
     }
 
     public function insertPatient($name, $age, $sex, $address){

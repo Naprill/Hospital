@@ -8,20 +8,35 @@ if (isset($_POST['send1'])){
     $newAnalysisId = $insertObj->insertAnalysis($_POST['analysis']);
     header("Location: addAnalysis.php?analysis_id=".$newAnalysisId); exit;
 }
-$database = new Database();
-$analyzes = $database->getRows("SELECT * FROM Analyzes"); ///!!!!!!!
+
 
 if (isset($_POST['send2'])){
     $insertObj = new Insert();
-    $insertObj->insertParameter(
+    $newParameterId = $insertObj->insertParameter(
         $_POST['parameter'],
         $_POST['unit'],
         $_POST['norm_min'],
         $_POST['norm_max'],
         $_POST['analysis']
     );
-
 }
+$deleteObj = new Delete();
+
+if (isset($_POST['send3'])){
+    $analysisToDelete = $_POST['analysis'];
+    $deleteObj->deleteAnalysisParameters($analysisToDelete);
+    $deleteObj->deleteAnalysis($analysisToDelete);
+}
+
+if (isset($_POST['send4'])){
+    $parameterToDelete = $_POST['parameter'];
+    $deleteObj->deleteParameter($parameterToDelete);
+}
+
+$database = new Database();
+$analyzes = $database->getRows("SELECT * FROM Analyzes");
+$parameters = $database->getRows("Select * from Parameters");
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -54,40 +69,6 @@ if (isset($_POST['send2'])){
 </form>
 <hr>
 <h2>Додавання параметрів</h2>
-<form action="addAnalysis.php" method="post">
-
-    <div class="field">
-        <label>Пакет аналізів:
-            <select name="analysis">
-                <?php foreach ($analyzes as $analysis) : ?>
-                    <option <?php if($analysis['analysis_id'] == $_GET[analysis_id]) echo "selected "?>value='<?php echo $analysis['analysis_id']; ?>'><?php echo $analysis['analysis_name']; ?></option>;
-                <?php endforeach; ?>
-            </select>
-        </label>
-    </div>
-    <div class="field">
-        <label>Назва параметра:
-            <input name="parameter" title="parameter" type="text">
-        </label>
-    </div>
-    <div class="field">
-        <label>Одиниці вимірювання:
-            <input name="unit" title="unit" type="text">
-        </label>
-    </div>
-
-    <div class="field">
-        <label>Нижня межа норми :
-            <input name="norm_min" title="norm_min" type="text">
-        </label>
-    </div>
-    <div class="field">
-        <label>Верхня межа норми:
-            <input name="norm_max" title="norm_max" type="text">
-        </label>
-    </div>
-    <input type="submit" name="send2" value="Додати" required/>
-</form>
 <div class="tips">
     <table border>
         <caption>Підказка по створенню параметра
@@ -124,6 +105,77 @@ if (isset($_POST['send2'])){
         </tbody>
     </table>
 </div>
+
+<form action="addAnalysis.php" method="post">
+    <div class="field">
+        <label>Пакет аналізів:
+            <select name="analysis">
+                <?php foreach ($analyzes as $analysis) : ?>
+                    <option <?php if($analysis['analysis_id'] == $_GET[analysis_id]) echo "selected "?>value='<?php echo $analysis['analysis_id']; ?>'><?php echo $analysis['analysis_name']; ?></option>;
+                <?php endforeach; ?>
+            </select>
+        </label>
+    </div>
+    <div class="field">
+        <label>Назва параметра:
+            <input name="parameter" title="parameter" type="text">
+        </label>
+    </div>
+    <div class="field">
+        <label>Одиниці вимірювання:
+            <input name="unit" title="unit" type="text">
+        </label>
+    </div>
+
+    <div class="field">
+        <label>Нижня межа норми :
+            <input name="norm_min" title="norm_min" type="text">
+        </label>
+    </div>
+    <div class="field">
+        <label>Верхня межа норми:
+            <input name="norm_max" title="norm_max" type="text">
+        </label>
+    </div>
+    <input type="submit" name="send2" value="Додати" required/>
+</form>
+
+<hr>
+<h2>Видалення аналізу</h2>
+<p class="tips">Видалення аналізу призведе до виделення шаблону з усіма його параметрами.
+    Видалення не можливе, якщо у базі даних збережено результати цього аналізу.</p>
+<form action="addAnalysis.php" method="post">
+
+    <div class="field">
+        <label>Назва аналізу:
+            <select name="analysis">
+                <?php foreach ($analyzes as $analysis) : ?>
+                    <option <?php if($analysis['analysis_id'] == $_GET[analysis_id]) echo "selected "?>value='<?php echo $analysis['analysis_id']; ?>'><?php echo $analysis['analysis_name']; ?></option>;
+                <?php endforeach; ?>
+            </select>
+        </label>
+    </div>
+
+    <input type="submit" name="send3" value="Видалити" required/>
+</form>
+
+<hr>
+<h2>Видалення параметра</h2>
+
+<form action="addAnalysis.php" method="post">
+
+    <div class="field">
+        <label>Назва параметра:
+            <select name="parameter">
+                <?php foreach ($parameters as $parameter) : ?>
+                    <option <?php if($parameter['parameter_id'] == $newParameterId) echo "selected "?>value='<?php echo $parameter['parameter_id']; ?>'><?php echo $parameter['parameter_name']; ?></option>;
+                <?php endforeach; ?>
+            </select>
+        </label>
+    </div>
+
+    <input type="submit" name="send4" value="Видалити" required/>
+</form>
 <img class="mockup" src="../css/footer.jpg">
 </body>
 </html>

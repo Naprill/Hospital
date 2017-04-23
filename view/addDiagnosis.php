@@ -54,12 +54,12 @@ $diagnoses = $database->getRows("SELECT * FROM Diagnoses"); ///!!!!!!!
 
     <input type="submit" name="send1" value="Додати" required/>
 </form>
-
+<hr>
 <h2>Видалення діагнозу</h2>
 <form action="addDiagnosis.php" method="post">
 
     <div class="field">
-        <label>Виберіть діагноз:
+        <label>Назва діагнозу:
             <select name="diagnosis_delete">
                 <?php foreach ($diagnoses as $diagnosis) : ?>
                     <option value='<?php echo $diagnosis['diagnosis_id']; ?>'><?php echo $diagnosis['diagnosis_name']; ?></option>;

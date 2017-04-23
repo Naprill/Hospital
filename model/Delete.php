@@ -17,8 +17,26 @@ class Delete
     }
 
     public function deleteDiagnosis($diagnosis_id){
-        $this->database->insertOrDeleteRow("Delete from Diagnoses WHERE diagnosis_id=?",[
+        $this->database->insertOrDeleteRow("Delete from Diagnoses WHERE diagnosis_id = ?",[
             $diagnosis_id
         ]);
     }
+
+    public function deleteAnalysisParameters($analysis_id){
+        $this->database->insertOrDeleteRow("Delete from Parameters WHERE analysis_id = ?",[
+            $analysis_id
+        ]);
+    }
+
+    public function deleteAnalysis($analysis_id){
+        $this->database->insertOrDeleteRow("Delete from Analyzes WHERE analysis_id = ?",[
+            $analysis_id
+        ]);
+    }
+    public function deleteParameter($parameter_id){
+        $this->database->insertOrDeleteRow("Delete from Parameters WHERE parameter_id = ?",[
+            $parameter_id
+        ]);
+    }
+
 }
