@@ -22,14 +22,6 @@ $searchResult = $database->getRows($query);
 
 if (isset($_POST['send'])) {
 
-    //var_dump($_POST);
-    if (is_numeric($_POST['patient_id'])){
-       // echo 'id';
-    }
-    else{
-        //echo 'no_id';
-
-    }
     if (strlen($_POST['patient_id']) != 0 ){
         $query = $query." WHERE
                 Patients.patient_id = ?; ";
@@ -72,7 +64,7 @@ if (isset($_POST['send'])) {
             <input id="list-hidden" type="hidden" name="patient_id">
             <datalist id="name">
                 <?php foreach ($patients as $patient) : ?>
-                    <option data-value="<?php echo $patient['patient_id']?>"><?php echo $patient['patient_name']; ?></option>;
+                    <option <?php if($patient['patient_id'] == $_POST[patient_id])echo "selected ";?>data-value="<?php echo $patient['patient_id']?>"><?php echo $patient['patient_name']; ?></option>;
                 <?php endforeach; ?>
             </datalist>
         </label>
@@ -83,7 +75,7 @@ if (isset($_POST['send'])) {
 
 
 </script>
-
+<p class="tips">Знайдено результатів: <?php echo count($searchResult);?></p>
 <table class="searchTable">
     <caption>Результат пошуку
     </caption>
@@ -100,7 +92,7 @@ if (isset($_POST['send'])) {
 
     <tbody>
 
-    <?php $i=0; foreach ($searchResult as $result) : ?>
+    <?php $i=1; foreach ($searchResult as $result) : ?>
         <tr>
             <td scope="row"> <?php echo $i; $i++; ?> </td>
             <td><a class="button_view" href="viewAnalysis.php?order_id=<?php echo $result['order_id']; ?>"> </a></td>

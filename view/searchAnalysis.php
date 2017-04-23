@@ -243,7 +243,7 @@ if(isset($_POST['send'])){
     <input type="submit" name="send" value="Знайти" required/>
 </form>
 
-
+<p class="tips">Знайдено результатів: <?php echo count($searchResult);?></p>
 <table class="searchTable">
     <caption>Результат пошуку
     </caption>
@@ -260,7 +260,7 @@ if(isset($_POST['send'])){
 
     <tbody>
 
-    <?php  $i=0; foreach ($searchResult as $result) : ?>
+    <?php  $i=1; foreach ($searchResult as $result) : ?>
         <tr>
             <td scope="row"> <?php echo $i; $i++; ?> </td>
             <td><a class="button_view" target="_blank" href="viewAnalysis.php?order_id=<?php echo $result['order_id']; ?>"> </a></td>
