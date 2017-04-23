@@ -70,6 +70,6 @@ $diagnoses = $database->getRows("SELECT * FROM Diagnoses"); ///!!!!!!!
 
     <input type="submit" name="send2" value="Видалити" required/>
 </form>
-<img class="mockup" src="../css/footer.jpg">
+<?php include "footer.html"; ?>
 </body>
 </html>

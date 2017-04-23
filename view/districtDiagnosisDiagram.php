@@ -100,7 +100,7 @@ $ulcerData = makeVector($ulcerData_temp,"data");
 <div id="chart" style="margin-top:20px; margin-left:20px; width:1200px; height:300px;"></div>
 <pre class="code brush:js"></pre>
 
-<img class="mockup" src="../css/footer.jpg">
+<?php include "footer.html"; ?>
 
 <script class="code" type="text/javascript">$(document).ready(function(){
         var s1 = <?php echo json_encode($healthyData);?>;

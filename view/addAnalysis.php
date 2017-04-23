@@ -9,7 +9,7 @@ if (isset($_POST['send1'])){
     header("Location: addAnalysis.php?analysis_id=".$newAnalysisId); exit;
 }
 
-
+$newParameterId = 1;
 if (isset($_POST['send2'])){
     $insertObj = new Insert();
     $newParameterId = $insertObj->insertParameter(
@@ -172,6 +172,6 @@ $parameters = $database->getRows("Select * from Parameters");
 
     <input type="submit" name="send4" value="Видалити" required/>
 </form>
-<img class="mockup" src="../css/footer.jpg">
+<?php include "footer.html"; ?>
 </body>
 </html>

@@ -53,6 +53,6 @@ $analyzes = $selectObj->selectAll("Analyzes");
     </li>
 </ul>
 <img class="mockup" src="css/main.jpg">
-<img class="mockup" src="css/footer.jpg">
+<?php include "view/footer.html"; ?>
 </body>
 </html>

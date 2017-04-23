@@ -190,6 +190,6 @@ if (isset($_POST['send'])){
     </div>
     <input type="submit" name="send" value="Зберегти аналіз" required/>
 </form>
-  <img class="mockup" src="../css/footer.jpg">
+  <?php include "footer.html"; ?>
   </body>
 </html>

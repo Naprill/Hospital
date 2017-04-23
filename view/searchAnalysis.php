@@ -273,6 +273,6 @@ if(isset($_POST['send'])){
 
     </tbody>
 </table>
-<img class="mockup" src="../css/footer.jpg">
+<?php include "footer.html"; ?>
 </body>
 </html>

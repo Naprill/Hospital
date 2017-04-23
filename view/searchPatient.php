@@ -64,7 +64,7 @@ if (isset($_POST['send'])) {
             <input id="list-hidden" type="hidden" name="patient_id">
             <datalist id="name">
                 <?php foreach ($patients as $patient) : ?>
-                    <option <?php if($patient['patient_id'] == $_POST[patient_id])echo "selected ";?>data-value="<?php echo $patient['patient_id']?>"><?php echo $patient['patient_name']; ?></option>;
+                    <option data-value="<?php echo $patient['patient_id']?>"><?php echo $patient['patient_name']; ?></option>;
                 <?php endforeach; ?>
             </datalist>
         </label>
@@ -105,6 +105,6 @@ if (isset($_POST['send'])) {
 
     </tbody>
 </table>
-<img class="mockup" src="../css/footer.jpg">
+<?php include "footer.html"; ?>
 </body>
 </html>

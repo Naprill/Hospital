@@ -114,7 +114,7 @@ $data[2]["color"] = "rgb(11, 47, 167)";
     </div>
 </div>
 
-<img class="mockup" src="../css/footer.jpg">
+<?php include "footer.html"; ?>
 
 <script type="text/javascript">
 

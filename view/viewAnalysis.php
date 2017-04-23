@@ -145,6 +145,7 @@ WHERE
     <div class="field">
         <label>Проведене лікування: <?php echo $patientData['treatment'] ?></label>
     </div>
-<img class="mockup" src="../css/footer.jpg">
+<div class="beforeFooter"></div>
+<?php include "footer.html"; ?>
 </body>
 </html>
