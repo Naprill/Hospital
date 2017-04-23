@@ -107,35 +107,31 @@ $parameters = $database->getRows("Select * from Parameters");
 </div>
 
 <form action="addAnalysis.php" method="post">
-    <div class="field">
-        <label>Пакет аналізів:
-            <select name="analysis">
+    <div class="allFields">
+        <div class="field">
+            <label for="analysis">Пакет аналізів: </label>
+            <select id="analysis" name="analysis">
                 <?php foreach ($analyzes as $analysis) : ?>
                     <option <?php if($analysis['analysis_id'] == $_GET[analysis_id]) echo "selected "?>value='<?php echo $analysis['analysis_id']; ?>'><?php echo $analysis['analysis_name']; ?></option>;
                 <?php endforeach; ?>
             </select>
-        </label>
-    </div>
-    <div class="field">
-        <label>Назва параметра:
-            <input name="parameter" title="parameter" type="text">
-        </label>
-    </div>
-    <div class="field">
-        <label>Одиниці вимірювання:
-            <input name="unit" title="unit" type="text">
-        </label>
-    </div>
-
-    <div class="field">
-        <label>Нижня межа норми :
-            <input name="norm_min" title="norm_min" type="text">
-        </label>
-    </div>
-    <div class="field">
-        <label>Верхня межа норми:
-            <input name="norm_max" title="norm_max" type="text">
-        </label>
+        </div>
+        <div class="field">
+            <label for="parameter">Назва параметра:</label>
+            <input id="parameter" name="parameter" title="parameter" type="text">
+        </div>
+        <div class="field">
+            <label for="unit">Одиниці вимірювання:</label>
+            <input id="unit" name="unit" title="unit" type="text">
+        </div>
+        <div class="field">
+            <label for="norm_min">Нижня межа норми :</label>
+            <input id="norm_min" name="norm_min" title="norm_min" type="text">
+        </div>
+        <div class="field">
+            <label for="norm_max">Верхня межа норми:</label>
+            <input id="norm_max" name="norm_max" title="norm_max" type="text">
+        </div>
     </div>
     <input type="submit" name="send2" value="Додати" required/>
 </form>

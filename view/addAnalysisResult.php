@@ -93,9 +93,9 @@ if (isset($_POST['send'])){
   <h2>Додавання аналізу</h2>
 
 <form action="addAnalysisResult.php?analysis_id=<?php echo $_GET['analysis_id']; ?>" method="post">
-
-    <div class="field">
-        <label>Пацієнт:
+    <div class="allFields">
+        <div class="field">
+            <label for="list">Пацієнт:</label>
             <input id="list" name="patient_name" list="name">
             <input id="list-hidden" type="hidden" name="patient_id" >
             <datalist id="name">
@@ -103,28 +103,26 @@ if (isset($_POST['send'])){
                     <option data-value='<?php echo $patient_name['patient_id']; ?>'><?php echo $patient_name['patient_name']; ?></option>;
                 <?php endforeach; ?>
             </datalist>
-        </label>
-    </div>
-
-  <div class="field">
-    <label>Дата народження: <input name="birthdate" type="date"></label>
-  </div>
-  <div class="field">
-    <label>Стать:
-        <select name="sex">
-                <option value='Female'>Жіноча</option>
-                <option value='Male'>Чоловіча</option>
+        </div>
+      <div class="field">
+          <label for="birthdate">Дата народження: </label>
+          <input id="birthdate" name="birthdate" type="date">
+      </div>
+      <div class="field">
+        <label for="sex">Стать: </label>
+        <select id="sex" name="sex">
+            <option value='Male'>Чоловіча</option>
+            <option value='Female'>Жіноча</option>
         </select>
-    </label>
-  </div>
-    <div class="field">
-      <label>Місце проживання:
-          <select name="address">
+      </div>
+      <div class="field">
+          <label for="address">Місце проживання:</label>
+          <select id="address" name="address">
               <?php foreach ($addresses as $address) : ?>
-                  <option value='<?php echo $address['address_id']; ?>'><?php echo $address['address_name']; ?></option>;
+                  <option value='<?php echo $address['address_id']; ?>'><?php echo $address['address_name']; if($address['address_id']>1) echo " район"?></option>;
               <?php endforeach; ?>
           </select>
-      </label>
+      </div>
     </div>
     <table>
       <caption><?php echo $current_analysis_name; ?>
@@ -163,27 +161,31 @@ if (isset($_POST['send'])){
 
       </tbody>
     </table>
-
-    <div class="field">
-        <label>Заключення:
-            <select name="diagnosis">
+    <div class="allFields">
+        <div class="field">
+            <label for="diagnosis">Заключення: </label>
+            <select id="diagnosis" name="diagnosis">
             <?php foreach ($diagnoses as $diagnosis) : ?>
                 <option value='<?php echo $diagnosis['diagnosis_id']; ?>'><?php echo $diagnosis['diagnosis_name']; ?></option>;
             <?php endforeach; ?>
             </select>
-        </label>
-    </div>
-    <div class="field">
-        <label>Супутній діагноз: <input class="input70" name="cover_diagnosis" type="text"></label>
-    </div>
-    <div class="field">
-        <label>Дата закінчення аналізу: <input name="completion_date" type="date"></label>
-    </div>
-    <div class="field">
-        <label>Місце здачі аналізу: <input name="place" type="text"></label>
-    </div>
-    <div class="field">
-        <label>Проведене лікування: <textarea rows="5" cols="50"  name="treatment" ></textarea> </label>
+        </div>
+        <div class="field">
+            <label for="cover_diagnosis">Супутній діагноз: </label>
+            <input id="cover_diagnosis" class="input70" name="cover_diagnosis" type="text">
+        </div>
+        <div class="field">
+            <label for="completion_date">Дата закінчення аналізу: </label>
+            <input id="completion_date" name="completion_date" type="date">
+        </div>
+        <div class="field">
+            <label for="place">Місце здачі аналізу: </label>
+            <input id="place" name="place" type="text">
+        </div>
+        <div class="field">
+            <label for="treatment">Проведене лікування: </label>
+            <textarea id="treatment" rows="8" cols="50"  name="treatment" ></textarea>
+        </div>
     </div>
     <input type="submit" name="send" value="Зберегти аналіз" required/>
 </form>

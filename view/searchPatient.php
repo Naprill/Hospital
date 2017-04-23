@@ -91,10 +91,10 @@ if (isset($_POST['send'])) {
     <tr>
         <th class="subheader" scope="col" >№</th>
         <th class="subheader" scope="col" >Перегляд</th>
-        <th class="subheader" scope="col" >№ зам.</th>
-        <th class="subheader" scope="col" >Ім'я</th>
-        <th class="subheader" scope="col" >Дата завершення аналізу</th>
-        <th class="subheader" scope="col" >Назва аналізу</th>
+        <th class="subheader" scope="col" >№ аналізу</th>
+        <th class="subheader" scope="col" >Пацієнт</th>
+        <th class="subheader" scope="col" >Дата аналізу</th>
+        <th class="subheader" scope="col" >Вид аналізу</th>
     </tr>
     </thead>
 

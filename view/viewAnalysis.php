@@ -10,7 +10,8 @@ $patientData = $database->getRow("SELECT
 	Patients.patient_name, 
 	Patients.birthdate, 
 	Patients.sex,
-	Address.address_name, 
+	Address.address_id, 
+	Address.address_name,
 	Orders.completion_date,
 	Orders.cover_diagnosis,
 	Orders.laboratory, 
@@ -77,7 +78,7 @@ WHERE
         </label>
     </div>
     <div class="field">
-        <label>Місце проживання: <?php echo $patientData['address_name'] ?> </label>
+        <label>Місце проживання: <?php echo $patientData['address_name']; if( $patientData['address_id']>1)echo " район"?> </label>
     </div>
 
 
