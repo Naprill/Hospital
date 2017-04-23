@@ -37,7 +37,6 @@ $data[2]["color"] = "rgb(11, 47, 167)";
     <link rel="stylesheet/less" type="text/css" href="../css/style.less" />
     <script src="../js/less.min.js"></script>
 
-<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
     <script language="javascript" type="text/javascript" src="../js/jquery.js"></script>
@@ -138,8 +137,8 @@ $data[2]["color"] = "rgb(11, 47, 167)";
                     radius: 0.8,
                     formatter: labelFormatter,
                     background: {
-                        opacity: 0.8,
-                        color: '#000'
+                        opacity: 0.6,
+                        color: '#13356e'
                     }
                 }
             }
