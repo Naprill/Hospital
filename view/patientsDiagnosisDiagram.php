@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * Created by PhpStorm.
  * User: ніна
@@ -52,9 +52,9 @@ $data[2]["color"] = "rgb(11, 47, 167)";
 
 <h2>Діаграма розподілу пацієнтів по діагнозу</h2>
 <div id="placeholder" class="demo-placeholder" style="padding: 0px; position: relative;  height: 300px">
-    <canvas class="flot-base" width="550" height="363" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 550px; height: 363px;">
+    <canvas class="flot-base" width="550" height="363" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 100%; height: 363px;">
     </canvas>
-    <canvas class="flot-overlay" width="550" height="363" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 550px; height: 363px;">
+    <canvas class="flot-overlay" width="550" height="363" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 100%; height: 363px;">
     </canvas>
     <div class="legend">
         <div style="position: absolute; width: 72px; height: 131px; top: 5px; right: 5px; opacity: 0.85; background-color: rgb(255, 255, 255);">
@@ -117,7 +117,7 @@ $data[2]["color"] = "rgb(11, 47, 167)";
 <?php include "footer.html"; ?>
 
 <script type="text/javascript">
-
+    $(document).ready(function () {
     var data = [],
         series = Math.floor(Math.random() * 6) + 3;
 
@@ -148,6 +148,7 @@ $data[2]["color"] = "rgb(11, 47, 167)";
     function labelFormatter(label, series) {
         return '<div style="font-size:11px; text-align:center; padding:2px; color:white;">' + label + "<br/>" + Math.round(series.percent) + "%</div>";
     }
+    });
 </script>
 </body>
 </html>
