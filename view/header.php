@@ -2,7 +2,11 @@
 $selectObj = new Select();
 $analyzes = $selectObj->selectAll("Analyzes");
 ?>
-<a href="../index.php"><img src="../css/header.jpg"></a>
+<div class="mockup">
+    <a href="../index.php">
+        <img src="../css/header.jpg" style="width: 100%;">
+    </a>
+</div>
   <ul>
       <li class="dropdown">
           <a href="javascript:void(0)" class="dropdown_button">Редагування шаблонів</a>

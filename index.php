@@ -20,7 +20,11 @@ $analyzes = $selectObj->selectAll("Analyzes");
     <title>Чернівецька обласна лікарня</title>
 </head>
 <body>
-<a href="#"><img src="css/header.jpg"></a>
+    <div class="mockup">
+        <a href="#">
+            <img src="css/header.jpg" style="width: 100%;">
+        </a>
+    </div>
 <ul>
     <li class="dropdown">
         <a href="javascript:void(0)" class="dropdown_button">Редагування шаблонів</a>
@@ -52,7 +56,10 @@ $analyzes = $selectObj->selectAll("Analyzes");
         </div>
     </li>
 </ul>
-<img class="mockup" src="css/main.jpg">
+
+<div class="mockup">
+    <img src="css/main.jpg" style="width: 100%;">
+</div>
 <?php include "view/footer.html"; ?>
 </body>
 </html>

@@ -133,6 +133,7 @@ $parameters = $database->getRows("Select * from Parameters");
             <input id="norm_max" name="norm_max" title="norm_max" type="text">
         </div>
     </div>
+    <div class="afterFields"></div>
     <input type="submit" name="send2" value="Додати" required/>
 </form>
 

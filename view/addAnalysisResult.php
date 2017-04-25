@@ -125,6 +125,7 @@ if (isset($_POST['send'])){
           </select>
       </div>
     </div>
+    <div class="afterFields"></div>
     <table>
       <caption><?php echo $current_analysis_name; ?>
       </caption>

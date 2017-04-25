@@ -240,6 +240,7 @@ if(isset($_POST['send'])){
             <input id="treatment" class="input70" type="text" name="treatment" value="<?php echo $_POST['treatment'];?>">
         </div>
     </div>
+    <div class="afterFields"></div>
     <input type="submit" name="send" value="Знайти" required/>
 </form>
 
