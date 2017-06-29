@@ -121,7 +121,7 @@ $ageReport[3]["count"] = count($database->getRows($query4));
     </caption>
     <thead>
     <tr>
-        <th class="subheader" scope="col" >Дігноз</th>
+        <th class="subheader" scope="col" >Діагноз</th>
         <th class="subheader" scope="col" >Кількість пацієнтів</th>
     </tr>
     </thead>
