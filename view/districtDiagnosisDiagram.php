@@ -106,8 +106,8 @@ $ulcerData = makeVector($ulcerData_temp,"address", sizeof($ticks));
     </caption>
     <thead>
     <tr>
-        <th class="subheader" scope="col" >номер</th>
-        <th class="subheader" scope="col" >район</th>
+        <th class="subheader" scope="col" >Номер</th>
+        <th class="subheader" scope="col" >Район</th>
     </tr>
     </thead>
 
@@ -127,8 +127,8 @@ $ulcerData = makeVector($ulcerData_temp,"address", sizeof($ticks));
     </caption>
     <thead>
     <tr>
-        <th class="subheader" scope="col" >номер</th>
-        <th class="subheader" scope="col" >район</th>
+        <th class="subheader" scope="col" >Номер</th>
+        <th class="subheader" scope="col" >Діагноз</th>
     </tr>
     </thead>
 
