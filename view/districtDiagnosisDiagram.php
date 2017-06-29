@@ -9,20 +9,25 @@ spl_autoload_register(function ($class_name) {
     include "../model/". $class_name . '.php';
 });
 $database = new Database();
-$ticks_temp = $database->getRows("Select address_name from Address");
-$ticks = makeVector($ticks_temp,"address_name");
+$addresses = $database->getRows("SELECT * FROM Address");
+$diagnoses = $database->getRows("SELECT * FROM Diagnoses");
+$ticks_temp = $database->getRows("Select address_name as address from Address");
+$ticks = makeVector($ticks_temp,"address_name",sizeof($ticks_temp));
 
-function makeVector($array, $index){
-    $result = array();
+function makeVector($array, $address, $size){
+
+    $result = array($size);
+    for($i=0; $i < $size; $i++) $result[$i] = 0;
+
     foreach ($array as $elem){
-        array_push($result, $elem["$index"]);
+        $result[$elem["$address"]] = $elem["data"];
     }
     return $result;
 }
 
 $healthyData_temp =  $database->getRows("
 	SELECT
-	 Diagnoses.diagnosis_name as diagnosis,
+	 Address.address_id as address,
 	 COUNT( Patients.patient_id ) as data
     FROM Orders
       JOIN Patients ON Patients.patient_id = Orders.patient_id
@@ -31,11 +36,11 @@ $healthyData_temp =  $database->getRows("
     WHERE Diagnoses.diagnosis_id = 1
     GROUP BY Address.address_id
 	");
-$healthyData = makeVector($healthyData_temp,"data");
+$healthyData = makeVector($healthyData_temp,"address", sizeof($ticks));
 
 $disbacteriosisData_temp =  $database->getRows("
 	SELECT
-	 Diagnoses.diagnosis_name as diagnosis,
+	 Address.address_id as address,
 	 COUNT( Patients.patient_id ) as data
     FROM Orders
       JOIN Patients ON Patients.patient_id = Orders.patient_id
@@ -44,11 +49,11 @@ $disbacteriosisData_temp =  $database->getRows("
     WHERE Diagnoses.diagnosis_id = 2
     GROUP BY Address.address_id
 	");
-$disbacteriosisData = makeVector($disbacteriosisData_temp,"data");
+$disbacteriosisData = makeVector($disbacteriosisData_temp,"address", sizeof($ticks));
 
 $ulcerData_temp =  $database->getRows("
 	SELECT
-	 Diagnoses.diagnosis_name as diagnosis,
+	 Address.address_id as address,
 	 COUNT( Patients.patient_id ) as data
     FROM Orders
       JOIN Patients ON Patients.patient_id = Orders.patient_id
@@ -57,10 +62,13 @@ $ulcerData_temp =  $database->getRows("
     WHERE Diagnoses.diagnosis_id = 3
     GROUP BY Address.address_id
 	");
-$ulcerData = makeVector($ulcerData_temp,"data");
+$ulcerData = makeVector($ulcerData_temp,"address", sizeof($ticks));
 
 //print_r($ticks);
+//print_r($disbacteriosisData_temp);
+//echo "<br>";
 //print_r($disbacteriosisData);
+//echo "<br>";
 //echo json_encode(array_values($ticks));
 
 ?>
@@ -91,6 +99,48 @@ $ulcerData = makeVector($ulcerData_temp,"data");
 <body >
 
 <?php include "header.php"; ?>
+
+<table class="searchTable">
+    <caption>
+        Райони
+    </caption>
+    <thead>
+    <tr>
+        <th class="subheader" scope="col" >номер</th>
+        <th class="subheader" scope="col" >район</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <?php  foreach ($addresses as $elem) : ?>
+        <tr>
+            <td scope="row"> <?php echo $elem['address_id']; ?> </td>
+            <td scope="row"> <?php echo $elem['address_name']; ?> </td
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>
+
+<table class="searchTable">
+    <caption>
+        Діагнози
+    </caption>
+    <thead>
+    <tr>
+        <th class="subheader" scope="col" >номер</th>
+        <th class="subheader" scope="col" >район</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <?php  foreach ($diagnoses as $elem) : ?>
+        <tr>
+            <td scope="row"> <?php echo $elem['diagnosis_id']; ?> </td>
+            <td scope="row"> <?php echo $elem['diagnosis_name']; ?> </td
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>
 
 <h2>Діаграма розподілу діагнозів по районах</h2>
 
@@ -126,8 +176,8 @@ $ulcerData = makeVector($ulcerData_temp,"data");
         });
 
         $('#chart').bind('jqplotDataHighlight',
-            function (ev, seriesIndex, pointIndex, data) {
-                $('#info').html('series: '+seriesIndex+', point: '+pointIndex+', data: '+data);
+            function (ev, seriesIndex, pointIndex) {
+                $('#info').html('diagnosis: '+(seriesIndex+1)+', address: '+(pointIndex+1));
             }
         );
 
